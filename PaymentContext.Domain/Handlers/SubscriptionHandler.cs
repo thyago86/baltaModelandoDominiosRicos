@@ -63,8 +63,14 @@ namespace PaymentContext.Domain.Handlers{
             //Relacionamentos
             AddNotifications(name, document, email, address, student, subscription, payment);
             //aplicar as validações
+
+            //checar as notificações
+            if(Invalid)
+                return new CommandResult(false, "Não foi possível realizar sua assinatura");
             //salvar as validações
             _repository.CreateSubscription(student);
+
+            
 
             //enviar e-mail de boas vindas
             _emailService.Send(student.Name.ToString(), student.Email.Address, "Bem vindo ao balta.io", "Sua assinatura foi criada");
